@@ -1,1 +1,3 @@
 A bunch of helper scripts which may or may not be of some use.
+
+tag_identifier - A quick script which passes the fastq file generated for the tag read to find all the tags found.

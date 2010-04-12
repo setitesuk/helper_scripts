@@ -72,7 +72,7 @@ tag_identifier
 =head1 DESCRIPTION
 
 A quick script which passes the fastq file generated for the tag read to find all the tags found.
-I then organises by count (highest first) and also compares the first 6 bases to see if it matches
+It then organises by count (highest first) and also compares the first 6 bases to see if it matches
 one of the illumina12 tagset.
 
 The first argument it the tag file fastq filename
