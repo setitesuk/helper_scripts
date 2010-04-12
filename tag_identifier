@@ -52,3 +52,99 @@ foreach my $tag ( sort { $b->[1] <=> $a->[1] } @s ) {
   print qq{$result\n} or carp $result;
   $i++;
 }
+
+__END__
+
+=head1 NAME
+
+tag_identifier
+
+=head1 VERSION
+
+1
+
+=head1 SYNOPSIS
+
+  tag_identifier xxxx_x_t.fastq
+  tag_identifier xxxx_x_t.fastq 20
+  tag_identifier xxxx_x_t.fastq 20 1
+
+=head1 DESCRIPTION
+
+A quick script which passes the fastq file generated for the tag read to find all the tags found.
+I then organises by count (highest first) and also compares the first 6 bases to see if it matches
+one of the illumina12 tagset.
+
+The first argument it the tag file fastq filename
+Second argument is the top x tags found to return (since the list can be very long) - note a zero here returns all
+Third argument is a boolean which tells it only to go through the first 10_000 reads found, which
+is a significant speed up
+
+This came initially from a one-liner written by David Jackson
+
+=head1 USAGE
+
+  As SYNOPSIS
+
+=head1 REQUIRED ARGUMENTS
+
+  Filename
+
+=head1 OPTIONS
+
+  top x tags to return
+  only first 10_000
+
+=head1 EXIT STATUS
+
+0
+
+=head1 SUBROUTINES/METHODS
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION
+
+=head1 DEPENDENCIES
+
+=over
+
+=item strict
+
+=item warnings
+
+=item Carp
+
+=item English -no_match_vars
+
+=item Readonly
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+=head1 BUGS AND LIMITATIONS
+
+Most code has bugs and/or limitations, and this code is likely no exception. Email if you have any problems, concerns, patches or updates.
+
+=head1 AUTHOR
+
+Andy Brown
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2010 Andy Brown (setitesuk@gmail.com)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
