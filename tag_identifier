@@ -1,0 +1,54 @@
+#! /software/bin/perl
+
+use strict;
+use warnings;
+use English qw{-no_match_vars};
+use Carp;
+use Readonly;
+
+Readonly::Scalar our $ILLUMINA_TAG_SET => {
+    ATCACG => 1,
+    CGATGT => 2,
+    TTAGGC => 3,
+    TGACCA => 4,
+    ACAGTG => 5,
+    GCCAAT => 6,
+    CAGATC => 7,
+    ACTTGA => 8,
+    GATCAG => 9,
+    TAGCTT => 10,
+    GGCTAC => 11,
+    CTTGTA => 12,
+};
+
+my $file = shift @ARGV;
+my $only_top_x = shift @ARGV;
+my $max_number_read = shift @ARGV;
+my $max_number_reads = 10_000;
+my $i = 0;
+
+open ( my $fh, q{<}, $file ) or croak qq{Unable to open $file for reading};
+
+my %h;
+
+while ( (!$max_number_read || $i < $max_number_reads) && (my $line = readline $fh) ) {
+  if ( ( $i++%4 ) == 1 ) {
+    $h{substr($line,0,8)}++;
+  }
+}
+
+close $fh or croak qq{Unable to close $file handle};
+
+my @s;
+while ( my($k,$v) = each %h ) {
+  push @s, [$k,$v];
+}
+
+$i = 1;
+print qq{Tag\t\tCount\tMatchTag\n} or carp qq{Tag\t\tCount\tMatchTag\n};
+foreach my $tag ( sort { $b->[1] <=> $a->[1] } @s ) {
+  if ( $only_top_x and ($i > $only_top_x) ) { last; }
+  my $result = join"\t", @{$tag}, ( $ILLUMINA_TAG_SET->{substr($tag->[0],0,6)} || q{} );
+  print qq{$result\n} or carp $result;
+  $i++;
+}
